@@ -57,4 +57,4 @@ for i in range(97,123): #a-97, z-122
                     total = total + k
                 print(total) #answer
                     
-                
+                 
