@@ -1,6 +1,6 @@
 #Ariel Tynan
 #Euler Problem 059, XOR decryption, solved in Python
-#Started 14 March 2022
+#Started 14 March 2022, solved 15 March 2022 (1am)
 
 #Read in file
 with open('p059_cipher.txt') as f:
@@ -12,10 +12,11 @@ str_list = output.split()
 code = []
 for i in str_list:
     code.append(int(i))
-#print(code)
+
 #Encription key is 3 lower case characters
+total = 0 #sum of all ascii values for answer
 for i in range(97,123): #a-97, z-122
-    print("First element:",i)
+    #print("First element:",i)
     for j in range(97,123):
         for k in range(97,123):
             cipher = [i,j,k]
@@ -24,7 +25,7 @@ for i in range(97,123): #a-97, z-122
             ans = [None]*len(code) #reset answer
             for x in range(0,len(code)): #shifting between 3 elements in key
                 if shift == 0:
-                    ans[x] = code[x] ^ cipher[0]
+                    ans[x] = code[x] ^ cipher[0] #XOR gate ^
                     shift = 1
                 elif shift == 1:
                     ans[x] = code[x] ^ cipher[1]
@@ -34,22 +35,26 @@ for i in range(97,123): #a-97, z-122
                     shift = 0
                 if ans[x] < 0:
                     ans[x] = ans[x] + 127
-            #print("Cipher:",i,j,k,"Output:",ans)
-            #print(cipher)
+
+            OF = THE = AND = EULER = 0 #setting vars
             for m in range(0,len(ans)-5):
                 if ans[m] == 32 and ans[m+1] == 116 and ans[m+2] == 104 and ans[m + 3] == 101: #" the"
-                    print("THE found at", cipher)
+                    #print("THE found at", cipher)
+                    THE = 1
                 if ans[m] == 32 and ans[m+1] == 97 and ans[m+2] == 110 and ans[m + 3] == 100: #" and"
-                    print("AND found at", cipher)
+                    #print("AND found at", cipher)
+                    AND = 1
                 if ans[m] == 32 and ans[m+1] == 69 and ans[m+2] == 117 and ans[m + 3] == 108 and ans[m + 4] == 101 and ans[m + 5] == 114 : #" Euler"
-                    print("EULER found at", cipher)
-                if ans[m] == 32 and ans[m+1] == 97 and ans[m+2] == 110 and ans[m + 3] == 115 and ans[m + 4] == 119 and ans[m + 5] == 101 and ans[m + 6] == 114: #" answer"
-                    print("ANSWER found at", cipher)
-                if ans[m] == 32 and ans[m+1] == 111 and ans[m+2] == 102:
-                    print("OF found at", cipher)
+                    #print("EULER found at", cipher)
+                    Euler = 1
+                if ans[m] == 32 and ans[m+1] == 111 and ans[m+2] == 102: #" of"
+                    #print("OF found at", cipher)
+                    OF = 1
             #Found high frequency of use of the above words, including the only instance of "Euler"
-            if cipher == [101,120,112]:
-                print(chr(ans))
-                break
+            if THE == 1 and AND == 1 and Euler == 1 and OF == 1: #cipher == [101,120,112]:
+                for k in ans: #sums all ints/ascii nums
+                    #print(chr(k)) #print for message
+                    total = total + k
+                print(total) #answer
                     
                 
